@@ -1,0 +1,43 @@
+﻿@page "/home"
+@using Models
+@using Services
+
+@inject IRestauranteServices RestauranteServices
+
+<h1>Restaurantes</h1>
+
+
+@if (restaurantes == null)
+{
+    <p><em>Cargando</em></p>
+}
+else
+{
+    <table>
+        <tbody>
+            <tr>
+                @foreach (var resta in restaurantes)
+                {
+                    <td> @resta.NombreCiudad</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+}
+
+
+@code {
+
+    IEnumerable<Restaurante>
+        restaurantes = new List<Restaurante>
+            ();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        restaurantes = await RestauranteServices.GetAllRestaurantes();
+    }
+
+}
+
